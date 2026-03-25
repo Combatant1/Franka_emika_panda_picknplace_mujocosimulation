@@ -1,0 +1,360 @@
+<mujoco model="panda house interior v2 - improved grasp">
+  <compiler angle="radian" autolimits="true"/>
+
+  <statistic center="0.5 0 0.6" extent="2.5"/>
+
+  <!-- IMPROVED: Better solver for contact stability -->
+  <option timestep="0.002" iterations="100" ls_iterations="20">
+    <flag eulerdamp="disable"/>
+  </option>
+
+  <visual>
+    <headlight diffuse="0.4 0.4 0.4" ambient="0.3 0.3 0.3" specular="0.1 0.1 0.1"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="120" elevation="-20"/>
+    <scale contactwidth="0.075" contactheight="0.025" forcewidth="0.05"/>
+  </visual>
+
+  <default>
+    <default class="panda">
+      <material specular="0.5" shininess="0.25"/>
+      <joint armature="0.1" damping="1" axis="0 0 1" range="-2.8973 2.8973"/>
+      <general dyntype="none" biastype="affine" ctrlrange="-2.8973 2.8973" forcerange="-87 87"/>
+      <position forcerange="-100 100"/>
+      <default class="finger">
+        <joint axis="0 1 0" type="slide" range="0 0.06"/>
+      </default>
+
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <!-- IMPROVED: Better friction for gripper -->
+        <geom group="3" type="mesh" contype="1" conaffinity="1" friction="2.0 0.05 0.001"/>
+        <default class="primitive_collision">
+          <geom group="3" type="box" contype="1" conaffinity="3"
+           condim="3" solimp="0.99 0.995 0.01" solref="0.01 1" friction="2.0 0.005 0.0001"/>
+        </default>
+      </default>
+    </default>
+  </default>
+
+  <asset>
+    <!-- Skybox -->
+    <texture type="skybox" builtin="gradient" rgb1="0.4 0.6 0.8" rgb2="0.1 0.1 0.2" width="512" height="3072"/>
+    
+    <!-- Better Floor Textures -->
+    <texture type="2d" name="wood_floor" builtin="checker" mark="edge" 
+      rgb1="0.4 0.3 0.2" rgb2="0.35 0.25 0.15"
+      markrgb="0.45 0.35 0.25" width="512" height="512"/>
+    <material name="wood_floor" texture="wood_floor" texuniform="true" texrepeat="4 4" reflectance="0.1"/>
+    
+    <!-- Carpet Pattern -->
+    <texture type="2d" name="carpet_tex" builtin="checker" rgb1="0.5 0.1 0.1" rgb2="0.4 0.08 0.08" width="100" height="100"/>
+    <material name="carpet_mat" texture="carpet_tex" texrepeat="10 10" reflectance="0"/>
+
+    <!-- Wall textures -->
+    <material name="wall_mat" rgba="0.95 0.92 0.88 1" reflectance="0.02"/>
+    
+    <!-- Robot materials -->
+    <material name="robot_base" rgba="0.2 0.2 0.2 1" specular="0.3" shininess="0.2"/>
+    <material class="panda" name="white" rgba="1 1 1 1"/>
+    <material class="panda" name="off_white" rgba="0.9 0.9 0.9 1"/>
+    <material class="panda" name="black" rgba="0.1 0.1 0.1 1"/>
+    <material class="panda" name="green" rgba="0 0.8 0 1"/>
+    <material class="panda" name="light_blue" rgba="0.2 0.6 0.8 1"/>
+
+    <!-- Cup materials -->
+    <material name="cup_body" rgba="0.1 0.6 0.9 1" specular="0.5" shininess="0.3"/>
+    <material name="cup_handle" rgba="0.1 0.6 0.9 1" specular="0.5" shininess="0.3"/>
+    
+    <!-- Robot table material -->
+    <material name="table_wood" texture="dark_wood" texrepeat="2 2" rgba="0.4 0.25 0.15 1" specular="0.3" shininess="0.2"/>
+    <texture type="2d" name="dark_wood" builtin="checker" rgb1="0.3 0.2 0.1" rgb2="0.25 0.15 0.08" width="100" height="100"/>
+    
+    <!-- Scanned Objects Assets -->
+    <!-- Sofa -->
+    <mesh name="sofa_mesh" file="mujoco_scanned_objects/models/3D_Dollhouse_Sofa/model.obj" scale="10 10 10"/>
+    <texture name="sofa_tex" type="2d" file="mujoco_scanned_objects/models/3D_Dollhouse_Sofa/texture.png"/>
+    <material name="sofa_mat" texture="sofa_tex"/>
+
+    <!-- Decorative Table (Purple Dollhouse Table, scaled larger) -->
+    <mesh name="decor_table_mesh" file="mujoco_scanned_objects/models/3D_Dollhouse_TablePurple/model.obj" scale="4 4 4"/>
+    <texture name="table_tex" type="2d" file="mujoco_scanned_objects/models/3D_Dollhouse_TablePurple/texture.png"/>
+    <material name="table_mat" texture="table_tex"/>
+
+    <!-- Lamp -->
+    <mesh name="lamp_mesh" file="mujoco_scanned_objects/models/3D_Dollhouse_Lamp/model.obj" scale="4 4 4"/>
+    <texture name="lamp_tex" type="2d" file="mujoco_scanned_objects/models/3D_Dollhouse_Lamp/texture.png"/>
+    <material name="lamp_mat" texture="lamp_tex"/>
+
+    <!-- Clock -->
+    <mesh name="clock_mesh" file="mujoco_scanned_objects/models/Crosley_Alarm_Clock_Vintage_Metal/model.obj" scale="1.5 1.5 1.5"/>
+    <texture name="clock_tex" type="2d" file="mujoco_scanned_objects/models/Crosley_Alarm_Clock_Vintage_Metal/texture.png"/>
+    <material name="clock_mat" texture="clock_tex"/>
+
+    <!-- Buzzy Bee -->
+    <mesh name="bee_mesh" file="mujoco_scanned_objects/models/Fisher_price_Classic_Toys_Buzzy_Bee/model.obj" scale="1.05 1.05 1.05"/>
+    <texture name="bee_tex" type="2d" file="mujoco_scanned_objects/models/Fisher_price_Classic_Toys_Buzzy_Bee/texture.png"/>
+    <material name="bee_mat" texture="bee_tex"/>
+
+    <!-- Robot Meshes (from assets/) -->
+    <mesh name="link0_c" file="assets/link0.stl"/>
+    <mesh name="link1_c" file="assets/link1.stl"/>
+    <mesh name="link2_c" file="assets/link2.stl"/>
+    <mesh name="link3_c" file="assets/link3.stl"/>
+    <mesh name="link4_c" file="assets/link4.stl"/>
+    <mesh name="link5_c0" file="assets/link5_collision_0.obj"/>
+    <mesh name="link5_c1" file="assets/link5_collision_1.obj"/>
+    <mesh name="link5_c2" file="assets/link5_collision_2.obj"/>
+    <mesh name="link6_c" file="assets/link6.stl"/>
+    <mesh name="link7_c" file="assets/link7.stl"/>
+    <mesh name="hand_c" file="assets/hand.stl"/>
+
+    <mesh file="assets/link0_0.obj"/><mesh file="assets/link0_1.obj"/><mesh file="assets/link0_2.obj"/><mesh file="assets/link0_3.obj"/>
+    <mesh file="assets/link0_4.obj"/><mesh file="assets/link0_5.obj"/><mesh file="assets/link0_7.obj"/><mesh file="assets/link0_8.obj"/>
+    <mesh file="assets/link0_9.obj"/><mesh file="assets/link0_10.obj"/><mesh file="assets/link0_11.obj"/>
+    <mesh file="assets/link1.obj"/><mesh file="assets/link2.obj"/>
+    <mesh file="assets/link3_0.obj"/><mesh file="assets/link3_1.obj"/><mesh file="assets/link3_2.obj"/><mesh file="assets/link3_3.obj"/>
+    <mesh file="assets/link4_0.obj"/><mesh file="assets/link4_1.obj"/><mesh file="assets/link4_2.obj"/><mesh file="assets/link4_3.obj"/>
+    <mesh file="assets/link5_0.obj"/><mesh file="assets/link5_1.obj"/><mesh file="assets/link5_2.obj"/>
+    <mesh file="assets/link6_0.obj"/><mesh file="assets/link6_1.obj"/><mesh file="assets/link6_2.obj"/><mesh file="assets/link6_3.obj"/>
+    <mesh file="assets/link6_4.obj"/><mesh file="assets/link6_5.obj"/><mesh file="assets/link6_6.obj"/><mesh file="assets/link6_7.obj"/>
+    <mesh file="assets/link6_8.obj"/><mesh file="assets/link6_9.obj"/><mesh file="assets/link6_10.obj"/><mesh file="assets/link6_11.obj"/>
+    <mesh file="assets/link6_12.obj"/><mesh file="assets/link6_13.obj"/><mesh file="assets/link6_14.obj"/><mesh file="assets/link6_15.obj"/>
+    <mesh file="assets/link6_16.obj"/><mesh file="assets/link7_0.obj"/><mesh file="assets/link7_1.obj"/><mesh file="assets/link7_2.obj"/>
+    <mesh file="assets/link7_3.obj"/><mesh file="assets/link7_4.obj"/><mesh file="assets/link7_5.obj"/><mesh file="assets/link7_6.obj"/>
+    <mesh file="assets/link7_7.obj"/><mesh file="assets/hand_0.obj"/><mesh file="assets/hand_1.obj"/><mesh file="assets/hand_2.obj"/>
+    <mesh file="assets/hand_3.obj"/><mesh file="assets/hand_4.obj"/>
+    <mesh file="assets/finger_0.obj" scale="1 1 1.5"/><mesh file="assets/finger_1.obj" scale="1 1 1.5"/>
+  </asset>
+
+  <worldbody>
+    <!-- Lighting -->
+    <light pos="0 0 3" dir="0 0 -1" directional="true" diffuse="0.7 0.7 0.7" specular="0.3 0.3 0.3"/>
+    <light pos="1 1 2" dir="-1 -1 -1" diffuse="0.4 0.4 0.4" castshadow="true"/>
+    <light pos="-1 1 2" dir="1 -1 -1" diffuse="0.3 0.3 0.3"/>
+    
+    <!-- Floor and Carpet -->
+    <geom name="floor" size="4 4 0.05" type="plane" material="wood_floor" contype="1" conaffinity="1"/>
+    <geom name="carpet" type="box" size="1.2 1.5 0.005" pos="0.5 0 0.005" material="carpet_mat" contype="0" conaffinity="0"/>
+    
+    <!-- Walls -->
+    <geom name="wall_back" type="box" size="4 0.1 1.5" pos="0 -2.5 1.5" material="wall_mat" contype="1" conaffinity="1"/>
+    <geom name="wall_left" type="box" size="0.1 2.5 1.5" pos="-2.5 0 1.5" material="wall_mat" contype="1" conaffinity="1"/>
+    <geom name="wall_right" type="box" size="0.1 2.5 1.5" pos="2.5 0 1.5" material="wall_mat" contype="1" conaffinity="1"/>
+
+    <!-- Robot Base -->
+    <body name="robot_base" pos="0 0 0.02">
+      <geom name="robot_base_visual" type="cylinder" size="0.12 0.02" pos="0 0 0.01" material="robot_base" contype="0" conaffinity="0"/>
+      <body name="link0" childclass="panda">
+        <inertial mass="0.629769" pos="-0.041018 -0.00014 0.049974" fullinertia="0.00315 0.00388 0.004285 8.2904e-7 0.00015 8.2299e-6"/>
+        <geom mesh="link0_0" material="off_white" class="visual"/>
+        <geom mesh="link0_1" material="black" class="visual"/>
+        <geom mesh="link0_2" material="off_white" class="visual"/>
+        <geom mesh="link0_3" material="black" class="visual"/>
+        <geom mesh="link0_4" material="off_white" class="visual"/>
+        <geom mesh="link0_5" material="black" class="visual"/>
+        <geom mesh="link0_7" material="white" class="visual"/>
+        <geom mesh="link0_8" material="white" class="visual"/>
+        <geom mesh="link0_9" material="black" class="visual"/>
+        <geom mesh="link0_10" material="off_white" class="visual"/>
+        <geom mesh="link0_11" material="white" class="visual"/>
+        <geom mesh="link0_c" class="collision"/>
+        <body name="link1" pos="0 0 0.333">
+          <joint name="joint1" damping="40"/>
+          <geom material="white" mesh="link1" class="visual"/>
+          <geom mesh="link1_c" class="collision"/>
+          <body name="link2" quat="1 -1 0 0">
+            <joint name="joint2" range="-1.7628 1.7628" damping="40"/>
+            <geom material="white" mesh="link2" class="visual"/>
+            <geom mesh="link2_c" class="collision"/>
+            <body name="link3" pos="0 -0.316 0" quat="1 1 0 0">
+              <joint name="joint3" damping="40"/>
+              <geom mesh="link3_0" material="white" class="visual"/>
+              <geom mesh="link3_1" material="white" class="visual"/>
+              <geom mesh="link3_2" material="white" class="visual"/>
+              <geom mesh="link3_3" material="black" class="visual"/>
+              <geom mesh="link3_c" class="collision"/>
+              <body name="link4" pos="0.0825 0 0" quat="1 1 0 0">
+                <joint name="joint4" range="-3.0718 -0.0698" damping="40"/>
+                <geom mesh="link4_0" material="white" class="visual"/>
+                <geom mesh="link4_1" material="white" class="visual"/>
+                <geom mesh="link4_2" material="black" class="visual"/>
+                <geom mesh="link4_3" material="white" class="visual"/>
+                <geom mesh="link4_c" class="collision"/>
+                <body name="link5" pos="-0.0825 0.384 0" quat="1 -1 0 0">
+                  <joint name="joint5" damping="2"/>
+                  <geom mesh="link5_0" material="black" class="visual"/>
+                  <geom mesh="link5_1" material="white" class="visual"/>
+                  <geom mesh="link5_2" material="white" class="visual"/>
+                  <geom mesh="link5_c0" class="collision"/>
+                  <geom mesh="link5_c1" class="collision"/>
+                  <geom mesh="link5_c2" class="collision"/>
+                  <body name="link6" quat="1 1 0 0">
+                    <joint name="joint6" range="-0.0175 3.7525" damping="2"/>
+                    <geom mesh="link6_0" material="off_white" class="visual"/>
+                    <geom mesh="link6_1" material="white" class="visual"/>
+                    <geom mesh="link6_2" material="black" class="visual"/>
+                    <geom mesh="link6_3" material="white" class="visual"/>
+                    <geom mesh="link6_4" material="white" class="visual"/>
+                    <geom mesh="link6_5" material="white" class="visual"/>
+                    <geom mesh="link6_6" material="white" class="visual"/>
+                    <geom mesh="link6_7" material="light_blue" class="visual"/>
+                    <geom mesh="link6_8" material="light_blue" class="visual"/>
+                    <geom mesh="link6_9" material="black" class="visual"/>
+                    <geom mesh="link6_10" material="black" class="visual"/>
+                    <geom mesh="link6_11" material="white" class="visual"/>
+                    <geom mesh="link6_12" material="green" class="visual"/>
+                    <geom mesh="link6_13" material="white" class="visual"/>
+                    <geom mesh="link6_14" material="black" class="visual"/>
+                    <geom mesh="link6_15" material="black" class="visual"/>
+                    <geom mesh="link6_16" material="white" class="visual"/>
+                    <geom mesh="link6_c" class="collision"/>
+                    <body name="link7" pos="0.088 0 0" quat="1 1 0 0">
+                      <joint name="joint7" damping="2"/>
+                      <geom mesh="link7_0" material="white" class="visual"/>
+                      <geom mesh="link7_1" material="black" class="visual"/>
+                      <geom mesh="link7_2" material="black" class="visual"/>
+                      <geom mesh="link7_3" material="black" class="visual"/>
+                      <geom mesh="link7_4" material="black" class="visual"/>
+                      <geom mesh="link7_5" material="black" class="visual"/>
+                      <geom mesh="link7_6" material="black" class="visual"/>
+                      <geom mesh="link7_7" material="white" class="visual"/>
+                      <geom mesh="link7_c" class="collision"/>
+                      <body name="hand" pos="0 0 0.107" quat="0.9238795 0 0 -0.3826834">
+                        <geom mesh="hand_0" material="off_white" class="visual"/>
+                        <geom mesh="hand_1" material="black" class="visual"/>
+                        <geom mesh="hand_2" material="black" class="visual"/>
+                        <geom mesh="hand_3" material="white" class="visual"/>
+                        <geom mesh="hand_4" material="off_white" class="visual"/>
+                        <geom mesh="hand_c" class="collision"/>
+                        <site name="gripper" pos="0 0 0.1"/>
+                        <body name="left_finger" pos="0 0 0.0584">
+                          <joint name="finger_joint1" class="finger" damping="10"/>
+                          <geom mesh="finger_0" material="off_white" class="visual"/>
+                          <geom mesh="finger_1" material="black" class="visual"/>
+                          <!-- IMPROVED: Better friction on gripper fingers -->
+                          <geom mesh="finger_0" class="collision" friction="5.0 0.01 0.0001"/>
+                        </body>
+                        <body name="right_finger" pos="0 0 0.0584" quat="0 0 0 1">
+                          <joint name="finger_joint2" class="finger" damping="10"/>
+                          <geom mesh="finger_0" material="off_white" class="visual"/>
+                          <geom mesh="finger_1" material="black" class="visual"/>
+                          <!-- IMPROVED: Better friction on gripper fingers -->
+                          <geom mesh="finger_0" class="collision" friction="5.0 0.01 0.0001"/>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+
+    <!-- ========== ROBOT'S COFFEE TABLE (ORIGINAL - DO NOT MODIFY) ========== -->
+    <body name="coffee_table" pos="0.7 0 0">
+      <!-- Table top -->
+      <geom name="table_top" type="box" size="0.35 0.25 0.02" pos="0 0 0.42" 
+            material="table_wood" mass="5" 
+            friction="1.5 0.05 0.001" 
+            solimp="0.998 0.999 0.0001" 
+            solref="0.001 1"
+            contype="1" conaffinity="1"/>
+      
+      <!-- Table legs (4 corners) -->
+      <geom name="table_leg1" type="cylinder" size="0.025 0.20" pos="0.30 0.20 0.20" 
+            material="table_wood" contype="1" conaffinity="1"/>
+      <geom name="table_leg2" type="cylinder" size="0.025 0.20" pos="0.30 -0.20 0.20" 
+            material="table_wood" contype="1" conaffinity="1"/>
+      <geom name="table_leg3" type="cylinder" size="0.025 0.20" pos="-0.30 0.20 0.20" 
+            material="table_wood" contype="1" conaffinity="1"/>
+      <geom name="table_leg4" type="cylinder" size="0.025 0.20" pos="-0.30 -0.20 0.20" 
+            material="table_wood" contype="1" conaffinity="1"/>
+      
+      <!-- Lower shelf -->
+      <geom name="table_shelf" type="box" size="0.32 0.22 0.015" pos="0 0 0.15" 
+            material="table_wood" contype="1" conaffinity="1"/>
+    </body>
+    
+    <!-- ========== DECORATIVE SCANNED MODELS ========== -->
+    <!-- Shelf behind robot -->
+    <body name="shelf_unit" pos="0 -0.8 0">
+      <!-- Shelf surface -->
+      <geom name="shelf_top" type="box" size="0.6 0.2 0.02" pos="0 0 0.6" 
+            material="table_wood" mass="5" contype="1" conaffinity="1"/>
+      <!-- Shelf legs -->
+      <geom name="shelf_leg1" type="cylinder" size="0.025 0.3" pos="0.55 0.15 0.3" material="table_wood" contype="1" conaffinity="1"/>
+      <geom name="shelf_leg2" type="cylinder" size="0.025 0.3" pos="0.55 -0.15 0.3" material="table_wood" contype="1" conaffinity="1"/>
+      <geom name="shelf_leg3" type="cylinder" size="0.025 0.3" pos="-0.55 0.15 0.3" material="table_wood" contype="1" conaffinity="1"/>
+      <geom name="shelf_leg4" type="cylinder" size="0.025 0.3" pos="-0.55 -0.15 0.3" material="table_wood" contype="1" conaffinity="1"/>
+    </body>
+    
+    <!-- Sofa (directly behind robot, rotated 180 degrees around Z-axis, scaled 10x) -->
+    <body name="scanned_sofa" pos="0 -1.4 0" quat="0 0 0 1">
+      <geom type="mesh" mesh="sofa_mesh" material="sofa_mat" contype="1" conaffinity="1"/>
+    </body>
+
+    <!-- Decorative Table (right side, away from robot) -->
+    <body name="decor_table" pos="1.5 -0.8 0">
+      <geom type="mesh" mesh="decor_table_mesh" material="table_mat" contype="1" conaffinity="1"/>
+      
+      <!-- Lamp on decorative table (fixed to sit ON the table) -->
+      <body name="lamp" pos="0 0 0.25">
+         <geom type="mesh" mesh="lamp_mesh" material="lamp_mat" contype="0" conaffinity="0"/>
+         <light pos="0 0 0.2" dir="0 0 -1" diffuse="0.5 0.5 0.4" specular="0.2 0.2 0.2"/>
+      </body>
+    </body>
+
+    <!-- Items on shelf behind robot -->
+    <body name="clock" pos="-0.3 -0.8 0.62">
+       <geom type="mesh" mesh="clock_mesh" material="clock_mat" contype="0" conaffinity="0"/>
+    </body>
+
+    <body name="toy_bee" pos="0.25 -0.8 0.62">
+       <geom type="mesh" mesh="bee_mesh" material="bee_mat" mass="0.15" contype="1" conaffinity="1"/>
+    </body>
+
+    <!-- Target Item: Goldilocks Cube (8cm height) Oriented 45 deg -->
+    <body name="cup" pos="0.70 0 0.48" quat="0.9239 0 0 0.3827">
+      <freejoint/>
+      <geom name="cube_geom" type="box" size="0.025 0.025 0.04" 
+            rgba="0 0 1 1" 
+            mass="0.02"
+            friction="3.0 0.01 0.0001"
+            solimp="0.999 0.999 0.001" 
+            solref="0.001 1"
+            contype="1" conaffinity="1"/>
+            solimp="0.95 0.99 0.001" 
+            solref="0.001 1"
+            contype="1" conaffinity="1"/>
+    </body>
+
+    <!-- Reference site for IK target -->
+    <site name="ik_target" pos="0.7 0 0.6" size="0.01" rgba="1 0 0 0.5"/>
+  </worldbody>
+
+  <equality>
+    <joint joint1="finger_joint1" joint2="finger_joint2" solimp="0.95 0.99 0.001" solref="0.005 1"/>
+  </equality>
+
+  <actuator>
+    <position class="panda" name="actuator1" joint="joint1" kp="1000" kv="20" ctrlrange="-2.8973 2.8973"/>
+    <position class="panda" name="actuator2" joint="joint2" kp="1000" kv="20" ctrlrange="-1.7628 1.7628"/>
+    <position class="panda" name="actuator3" joint="joint3" kp="750" kv="4" ctrlrange="-2.8973 2.8973"/>
+    <position class="panda" name="actuator4" joint="joint4" kp="750" kv="4" ctrlrange="-3.0718 -0.0698"/>
+    <position class="panda" name="actuator5" joint="joint5" kp="300" kv="2" forcerange="-12 12" ctrlrange="-2.8973 2.8973"/>
+    <position class="panda" name="actuator6" joint="joint6" kp="300" kv="2" forcerange="-12 12" ctrlrange="-0.0175 3.7525"/>
+    <position class="panda" name="actuator7" joint="joint7" kp="300" kv="2" forcerange="-12 12"/>
+    <!-- IMPROVED: Force-controlled gripper motors for proper grip -->
+    <motor joint="finger_joint1" name="actuator8" ctrlrange="-20 0" gear="1"/>
+    <motor joint="finger_joint2" name="actuator9" ctrlrange="-20 0" gear="1"/>
+  </actuator>
+
+  <keyframe>
+    <key name="home" qpos="0.0 -0.1973 0.0 -1.8624 0.0 1.2256 0.785 0.04 0.04 0.7 0 0.495 1 0 0 0" ctrl="0.0 -0.1973 0.0 -1.8624 0.0 1.2256 0.785 0.04"/>
+  </keyframe>
+</mujoco>
