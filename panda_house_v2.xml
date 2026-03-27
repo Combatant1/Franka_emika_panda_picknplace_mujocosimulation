@@ -53,6 +53,7 @@
     <texture type="2d" name="carpet_tex" builtin="checker" rgb1="0.5 0.1 0.1" rgb2="0.4 0.08 0.08" width="100" height="100"/>
     <material name="carpet_mat" texture="carpet_tex" texrepeat="10 10" reflectance="0"/>
 
+
     <!-- Wall textures -->
     <material name="wall_mat" rgba="0.95 0.92 0.88 1" reflectance="0.02"/>
     
@@ -72,31 +73,7 @@
     <material name="table_wood" texture="dark_wood" texrepeat="2 2" rgba="0.4 0.25 0.15 1" specular="0.3" shininess="0.2"/>
     <texture type="2d" name="dark_wood" builtin="checker" rgb1="0.3 0.2 0.1" rgb2="0.25 0.15 0.08" width="100" height="100"/>
     
-    <!-- Scanned Objects Assets -->
-    <!-- Sofa -->
-    <mesh name="sofa_mesh" file="mujoco_scanned_objects/models/3D_Dollhouse_Sofa/model.obj" scale="10 10 10"/>
-    <texture name="sofa_tex" type="2d" file="mujoco_scanned_objects/models/3D_Dollhouse_Sofa/texture.png"/>
-    <material name="sofa_mat" texture="sofa_tex"/>
 
-    <!-- Decorative Table (Purple Dollhouse Table, scaled larger) -->
-    <mesh name="decor_table_mesh" file="mujoco_scanned_objects/models/3D_Dollhouse_TablePurple/model.obj" scale="4 4 4"/>
-    <texture name="table_tex" type="2d" file="mujoco_scanned_objects/models/3D_Dollhouse_TablePurple/texture.png"/>
-    <material name="table_mat" texture="table_tex"/>
-
-    <!-- Lamp -->
-    <mesh name="lamp_mesh" file="mujoco_scanned_objects/models/3D_Dollhouse_Lamp/model.obj" scale="4 4 4"/>
-    <texture name="lamp_tex" type="2d" file="mujoco_scanned_objects/models/3D_Dollhouse_Lamp/texture.png"/>
-    <material name="lamp_mat" texture="lamp_tex"/>
-
-    <!-- Clock -->
-    <mesh name="clock_mesh" file="mujoco_scanned_objects/models/Crosley_Alarm_Clock_Vintage_Metal/model.obj" scale="1.5 1.5 1.5"/>
-    <texture name="clock_tex" type="2d" file="mujoco_scanned_objects/models/Crosley_Alarm_Clock_Vintage_Metal/texture.png"/>
-    <material name="clock_mat" texture="clock_tex"/>
-
-    <!-- Buzzy Bee -->
-    <mesh name="bee_mesh" file="mujoco_scanned_objects/models/Fisher_price_Classic_Toys_Buzzy_Bee/model.obj" scale="1.05 1.05 1.05"/>
-    <texture name="bee_tex" type="2d" file="mujoco_scanned_objects/models/Fisher_price_Classic_Toys_Buzzy_Bee/texture.png"/>
-    <material name="bee_mat" texture="bee_tex"/>
 
     <!-- Robot Meshes (from assets/) -->
     <mesh name="link0_c" file="assets/link0.stl"/>
@@ -280,43 +257,7 @@
             material="table_wood" contype="1" conaffinity="1"/>
     </body>
     
-    <!-- ========== DECORATIVE SCANNED MODELS ========== -->
-    <!-- Shelf behind robot -->
-    <body name="shelf_unit" pos="0 -0.8 0">
-      <!-- Shelf surface -->
-      <geom name="shelf_top" type="box" size="0.6 0.2 0.02" pos="0 0 0.6" 
-            material="table_wood" mass="5" contype="1" conaffinity="1"/>
-      <!-- Shelf legs -->
-      <geom name="shelf_leg1" type="cylinder" size="0.025 0.3" pos="0.55 0.15 0.3" material="table_wood" contype="1" conaffinity="1"/>
-      <geom name="shelf_leg2" type="cylinder" size="0.025 0.3" pos="0.55 -0.15 0.3" material="table_wood" contype="1" conaffinity="1"/>
-      <geom name="shelf_leg3" type="cylinder" size="0.025 0.3" pos="-0.55 0.15 0.3" material="table_wood" contype="1" conaffinity="1"/>
-      <geom name="shelf_leg4" type="cylinder" size="0.025 0.3" pos="-0.55 -0.15 0.3" material="table_wood" contype="1" conaffinity="1"/>
-    </body>
-    
-    <!-- Sofa (directly behind robot, rotated 180 degrees around Z-axis, scaled 10x) -->
-    <body name="scanned_sofa" pos="0 -1.4 0" quat="0 0 0 1">
-      <geom type="mesh" mesh="sofa_mesh" material="sofa_mat" contype="1" conaffinity="1"/>
-    </body>
 
-    <!-- Decorative Table (right side, away from robot) -->
-    <body name="decor_table" pos="1.5 -0.8 0">
-      <geom type="mesh" mesh="decor_table_mesh" material="table_mat" contype="1" conaffinity="1"/>
-      
-      <!-- Lamp on decorative table (fixed to sit ON the table) -->
-      <body name="lamp" pos="0 0 0.25">
-         <geom type="mesh" mesh="lamp_mesh" material="lamp_mat" contype="0" conaffinity="0"/>
-         <light pos="0 0 0.2" dir="0 0 -1" diffuse="0.5 0.5 0.4" specular="0.2 0.2 0.2"/>
-      </body>
-    </body>
-
-    <!-- Items on shelf behind robot -->
-    <body name="clock" pos="-0.3 -0.8 0.62">
-       <geom type="mesh" mesh="clock_mesh" material="clock_mat" contype="0" conaffinity="0"/>
-    </body>
-
-    <body name="toy_bee" pos="0.25 -0.8 0.62">
-       <geom type="mesh" mesh="bee_mesh" material="bee_mat" mass="0.15" contype="1" conaffinity="1"/>
-    </body>
 
     <!-- Target Item: Goldilocks Cube (8cm height) Oriented 45 deg -->
     <body name="cup" pos="0.70 0 0.48" quat="0.9239 0 0 0.3827">

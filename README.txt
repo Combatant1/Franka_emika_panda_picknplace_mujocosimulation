@@ -10,7 +10,6 @@ SYSTEM STATUS:
                                                                                 
 INSTALLATION
                                                                                 
-
 1. REQUIREMENTS:
    - Python 3.8 or higher
    - MuJoCo 2.2.2 or higher
@@ -18,21 +17,19 @@ INSTALLATION
 
 2. INSTALL DEPENDENCIES:
    Open terminal command prompt and run:
-   
    pip install mujoco numpy
 
 3. VERIFY INSTALLATION:
    Run this command to check MuJoCo is installed:
-   
    python -c "import mujoco; print('MuJoCo version:', mujoco.__version__)"
-
+   You should see the MuJoCo version printed to the console.
                                                                                 
 QUICK START
                                                                                 
 
 1. NAVIGATE TO PROJECT DIRECTORY:
-   cd C:\Users\Combatant\Documents\Annie\Pnp\franka_emika_panda
-
+   cd C:\Users\<YourUsername>\<DIRECTORY>\<DIRECTORY>
+   
 2. RUN THE SIMULATION:
    python panda_house_pickup.py
 
